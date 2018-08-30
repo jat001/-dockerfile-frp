@@ -21,4 +21,4 @@ jobs:
           docker tag "jat001/frp:$version" 'jat001/frp:latest'
 
           docker push "jat001/frp:$version"
-          docker push "jat001/frp:$version"
+          docker push "jat001/frp:latest"

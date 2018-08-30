@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-ARG VER
-LABEL version=$VER
+ARG version
+LABEL version=$version
 LABEL maintainer="Jat <chat@jat.email>"
 
 COPY frp/ /opt/frp/
