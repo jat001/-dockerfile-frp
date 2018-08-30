@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: docker login -u=jat001 -p="$DOCKER_PASSWD"
+      - run: |
+          set -euxo pipefail
+
+          version=$(curl 'https://api.github.com/repos/fatedier/frp/releases/latest' | jq -r '.tag_name')
+          filename="frp_${version:1}_linux_amd64.tar.gz"
+
+          curl -f "https://index.docker.io/v1/repositories/jat001/frp/tags/$version" && exit 0
+
+          wget --content-disposition "https://github.com/fatedier/frp/releases/download/$version/$filename"
+          tar -xzf "$filename"
+          mv "${filename:0:-7}" frp
+
+          docker build -t "jat001/frp:$version" --build-arg "version=$version" .
+          docker tag "jat001/frp:$version" 'jat001/frp:latest'
+
+          docker push "jat001/frp:$version"
+          docker push "jat001/frp:$version"
