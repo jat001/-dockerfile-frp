@@ -4,6 +4,6 @@ ARG version
 LABEL version=$version
 LABEL maintainer="Jat <chat@jat.email>"
 
-COPY frp/ /opt/frp/
-WORKDIR /opt/frp/
-CMD ["/opt/frp/frps", "-c", "/opt/frp/frps.ini"]
+WORKDIR /opt/frp
+COPY frp .
+CMD ["./frps", "-c", "frps.ini"]
