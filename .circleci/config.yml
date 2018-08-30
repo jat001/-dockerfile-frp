@@ -4,7 +4,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: docker login -u=jat001 -p="$DOCKER_PASSWD"
+      - run: echo "$DOCKER_PASSWD" | base64 --decode | docker login -u jat001 --password-stdin
       - run: |
           set -euxo pipefail
 
