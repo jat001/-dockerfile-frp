@@ -1,12 +1,4 @@
 version: 2
-nightly:
-  triggers:
-    - schedule:
-        cron: 0 0 * * *
-        filters:
-          branches:
-            only:
-              - master
 jobs:
   build:
     machine: true
@@ -30,3 +22,18 @@ jobs:
 
           docker push "jat001/frp:$version"
           docker push "jat001/frp:latest"
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
